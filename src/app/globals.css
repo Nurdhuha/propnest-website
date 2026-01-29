@@ -34,8 +34,8 @@
   --color-gold-500: var(--gold-500);
   --color-gold-400: var(--gold-400);
   --color-gold-300: var(--gold-300);
-  --font-sans: var(--font-inter);
-  --font-mono: ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 html {
