@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { Search, MapPin, Home, ChevronDown } from "lucide-react";
 import { siteData } from "@/config/site-data";
 import Container from "@/components/ui/Container";
@@ -22,28 +23,48 @@ const Hero = () => {
             <Container className="relative z-10 pt-32 pb-20">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light"
+                    >
                         <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
                         <span className="text-sm font-medium text-gold-500">
                             Platform Properti Terpercaya di Indonesia
                         </span>
-                    </div>
+                    </motion.div>
 
                     {/* Headline */}
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.4 }}
+                        className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
+                    >
                         {siteData.hero.headline.split(" ").slice(0, 2).join(" ")}
                         <span className="text-gold-gradient block md:inline">
                             {" "}{siteData.hero.headline.split(" ").slice(2).join(" ")}
                         </span>
-                    </h1>
+                    </motion.h1>
 
                     {/* Subheadline */}
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className="text-xl text-slate-300 max-w-2xl mx-auto"
+                    >
                         {siteData.hero.subheadline}
-                    </p>
+                    </motion.p>
 
                     {/* Search Bar */}
-                    <div className="mt-12 p-2 glass rounded-2xl max-w-3xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.7, delay: 0.8 }}
+                        className="mt-12 p-2 glass rounded-2xl max-w-3xl mx-auto"
+                    >
                         <div className="flex flex-col md:flex-row gap-2">
                             {/* Location Input */}
                             <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-navy-800 rounded-xl">
@@ -63,37 +84,54 @@ const Hero = () => {
                             </div>
 
                             {/* Search Button */}
-                            <Button variant="primary" size="lg" className="whitespace-nowrap">
+                            <Button variant="primary" size="lg" className="whitespace-nowrap btn-animate">
                                 <Search className="w-5 h-5 mr-2" />
                                 Cari Properti
                             </Button>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Quick Stats */}
-                    <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-8">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 1 }}
+                        className="flex flex-wrap justify-center gap-8 md:gap-16 pt-8"
+                    >
                         {siteData.stats.map((stat, idx) => (
-                            <div key={idx} className="text-center">
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 1.2 + idx * 0.1 }}
+                                className="text-center"
+                            >
                                 <p className="text-3xl md:text-4xl font-bold text-gold-500">
                                     {stat.value}
                                 </p>
                                 <p className="text-sm text-slate-400 mt-1">
                                     {stat.label}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </Container>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.5 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
+            >
                 <div className="w-6 h-10 rounded-full border-2 border-slate-500 flex items-start justify-center p-2">
                     <div className="w-1 h-2 bg-gold-500 rounded-full" />
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };
 
 export default Hero;
+
