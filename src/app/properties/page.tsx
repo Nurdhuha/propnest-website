@@ -25,9 +25,10 @@ const formatPrice = (price: number) => {
 function PropertiesContent() {
     const searchParams = useSearchParams();
     const typeFromUrl = searchParams.get("type") || "all";
+    const searchFromUrl = searchParams.get("search") || "";
 
     const [activeType, setActiveType] = useState(typeFromUrl);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState(searchFromUrl);
     const [showFilters, setShowFilters] = useState(false);
 
     const waNumber = siteData.general.whatsappNumbers[0];

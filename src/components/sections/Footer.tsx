@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Twitter, Youtube, Linkedin, MapPin, Phone, Mail } from "lucide-react";
 import { siteData } from "@/config/site-data";
 import Container from "@/components/ui/Container";
@@ -16,6 +17,7 @@ const socialIcons = {
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const logoSrc = siteData.general.logo || "/propnest-logo.png";
 
     const handleSocialClick = (platform: keyof typeof siteData.social) => {
         const url = siteData.social[platform];
@@ -31,9 +33,13 @@ const Footer = () => {
                     {/* Brand Column */}
                     <div className="space-y-6">
                         <Link href="/" className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center">
-                                <span className="text-navy-900 font-bold text-xl">P</span>
-                            </div>
+                            <Image
+                                src={logoSrc}
+                                alt={siteData.general.brandName}
+                                width={40}
+                                height={40}
+                                className="w-10 h-10 object-contain"
+                            />
                             <span className="text-2xl font-bold text-white">
                                 {siteData.general.brandName}
                             </span>

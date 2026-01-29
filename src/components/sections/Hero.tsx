@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, MapPin, Home, ChevronDown } from "lucide-react";
 import { siteData } from "@/config/site-data";
@@ -8,6 +9,24 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 
 const Hero = () => {
+    const router = useRouter();
+    const [searchLocation, setSearchLocation] = useState("");
+
+    const handleSearch = () => {
+        const query = searchLocation.trim();
+        if (query) {
+            router.push(`/properties?search=${encodeURIComponent(query)}`);
+        } else {
+            router.push("/properties");
+        }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    };
+
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
             {/* Background Image */}
@@ -72,6 +91,9 @@ const Hero = () => {
                                 <input
                                     type="text"
                                     placeholder="Lokasi (contoh: Jakarta, BSD)"
+                                    value={searchLocation}
+                                    onChange={(e) => setSearchLocation(e.target.value)}
+                                    onKeyPress={handleKeyPress}
                                     className="flex-1 bg-transparent text-white placeholder-slate-400 outline-none"
                                 />
                             </div>
@@ -84,7 +106,12 @@ const Hero = () => {
                             </div>
 
                             {/* Search Button */}
-                            <Button variant="primary" size="lg" className="whitespace-nowrap btn-animate">
+                            <Button
+                                variant="primary"
+                                size="lg"
+                                className="whitespace-nowrap btn-animate"
+                                onClick={handleSearch}
+                            >
                                 <Search className="w-5 h-5 mr-2" />
                                 Cari Properti
                             </Button>
@@ -125,9 +152,7 @@ const Hero = () => {
                 transition={{ duration: 0.6, delay: 1.5 }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce"
             >
-                <div className="w-6 h-10 rounded-full border-2 border-slate-500 flex items-start justify-center p-2">
-                    <div className="w-1 h-2 bg-gold-500 rounded-full" />
-                </div>
+                <ChevronDown className="w-8 h-8 text-gold-500" />
             </motion.div>
         </section>
     );
