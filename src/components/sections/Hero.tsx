@@ -1,67 +1,97 @@
+"use client";
+
 import React from "react";
-import Image from "next/image";
+import { Search, MapPin, Home, ChevronDown } from "lucide-react";
 import { siteData } from "@/config/site-data";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 
 const Hero = () => {
     return (
-        <section className="relative overflow-hidden pt-8 pb-16 md:pt-12 md:pb-24">
-            <Container>
-                <div className="relative rounded-[2.5rem] overflow-hidden bg-gradient-to-r from-pink-100 via-orange-50 to-blue-50">
-                    {/* Animated Background Shapes */}
-                    <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-pink-200/40 blur-3xl rounded-full" />
-                    <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 bg-blue-200/40 blur-3xl rounded-full" />
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+            {/* Background Image */}
+            <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${siteData.hero.backgroundImage})` }}
+            >
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/70 to-navy-900" />
+            </div>
 
-                    <div className="relative grid md:grid-cols-2 items-center gap-12 p-8 md:p-16 lg:p-24">
-                        <div className="space-y-6 md:space-y-8 text-center md:text-left">
-                            <div className="inline-block px-4 py-1.5 bg-white/50 backdrop-blur-sm rounded-full">
-                                <span className="text-sm font-bold tracking-wider text-orange-600 uppercase">
-                                    {siteData.hero.headline}
-                                </span>
-                            </div>
+            {/* Content */}
+            <Container className="relative z-10 pt-32 pb-20">
+                <div className="max-w-4xl mx-auto text-center space-y-8">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-light">
+                        <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
+                        <span className="text-sm font-medium text-gold-500">
+                            Platform Properti Terpercaya di Indonesia
+                        </span>
+                    </div>
 
-                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 leading-tight">
-                                Premium Sound, <br />
-                                <span className="text-orange-600">Pure Comfort.</span>
-                            </h1>
+                    {/* Headline */}
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                        {siteData.hero.headline.split(" ").slice(0, 2).join(" ")}
+                        <span className="text-gold-gradient block md:inline">
+                            {" "}{siteData.hero.headline.split(" ").slice(2).join(" ")}
+                        </span>
+                    </h1>
 
-                            <p className="text-lg text-gray-600 max-w-md mx-auto md:mx-0">
-                                {siteData.hero.subheadline}
-                            </p>
+                    {/* Subheadline */}
+                    <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+                        {siteData.hero.subheadline}
+                    </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                                <Button variant="primary" className="h-14 px-10 text-base shadow-lg shadow-orange-500/20">
-                                    {siteData.hero.ctaText}
-                                </Button>
-                                <Button variant="secondary" className="h-14 px-10 text-base">
-                                    View Offers
-                                </Button>
-                            </div>
-                        </div>
-
-                        <div className="relative group">
-                            <div className="relative aspect-square max-w-md mx-auto transform transition-transform duration-500 group-hover:scale-105">
-                                <img
-                                    src={siteData.hero.image}
-                                    alt="Featured Product"
-                                    className="w-full h-full object-contain drop-shadow-2xl"
+                    {/* Search Bar */}
+                    <div className="mt-12 p-2 glass rounded-2xl max-w-3xl mx-auto">
+                        <div className="flex flex-col md:flex-row gap-2">
+                            {/* Location Input */}
+                            <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-navy-800 rounded-xl">
+                                <MapPin className="w-5 h-5 text-gold-500" />
+                                <input
+                                    type="text"
+                                    placeholder="Lokasi (contoh: Jakarta, BSD)"
+                                    className="flex-1 bg-transparent text-white placeholder-slate-400 outline-none"
                                 />
                             </div>
-                            {/* Floating badges for visual interest */}
-                            <div className="absolute top-10 right-0 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce">
-                                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
-                                    <span className="font-bold text-xs">-30%</span>
-                                </div>
-                                <div className="text-left">
-                                    <p className="text-[10px] font-medium text-gray-500 uppercase">Special</p>
-                                    <p className="text-xs font-bold text-gray-900">Discount</p>
-                                </div>
+
+                            {/* Property Type Dropdown */}
+                            <div className="flex items-center gap-3 px-4 py-3 bg-navy-800 rounded-xl cursor-pointer group">
+                                <Home className="w-5 h-5 text-gold-500" />
+                                <span className="text-white">Tipe Properti</span>
+                                <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-gold-500 transition-colors" />
                             </div>
+
+                            {/* Search Button */}
+                            <Button variant="primary" size="lg" className="whitespace-nowrap">
+                                <Search className="w-5 h-5 mr-2" />
+                                Cari Properti
+                            </Button>
                         </div>
+                    </div>
+
+                    {/* Quick Stats */}
+                    <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-8">
+                        {siteData.stats.map((stat, idx) => (
+                            <div key={idx} className="text-center">
+                                <p className="text-3xl md:text-4xl font-bold text-gold-500">
+                                    {stat.value}
+                                </p>
+                                <p className="text-sm text-slate-400 mt-1">
+                                    {stat.label}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </Container>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <div className="w-6 h-10 rounded-full border-2 border-slate-500 flex items-start justify-center p-2">
+                    <div className="w-1 h-2 bg-gold-500 rounded-full" />
+                </div>
+            </div>
         </section>
     );
 };

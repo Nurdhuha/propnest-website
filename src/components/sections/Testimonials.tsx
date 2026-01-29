@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Star, Quote } from "lucide-react";
 import { siteData } from "@/config/site-data";
@@ -5,42 +7,59 @@ import Container from "@/components/ui/Container";
 
 const Testimonials = () => {
     return (
-        <section className="py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
-            <Container>
-                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 line">Customer Trust</h2>
-                    <p className="text-gray-500 text-lg">
-                        Join thousands of happy customers who shop with us daily
+        <section className="py-20 bg-navy-950 relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+                <div className="absolute top-20 left-20 w-64 h-64 border border-gold-500 rounded-full" />
+                <div className="absolute bottom-20 right-20 w-96 h-96 border border-gold-500 rounded-full" />
+            </div>
+
+            <Container className="relative z-10">
+                {/* Section Header */}
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Apa Kata <span className="text-gold-gradient">Klien Kami</span>
+                    </h2>
+                    <p className="text-slate-400">
+                        Testimoni dari klien yang telah mempercayakan pencarian properti kepada kami
                     </p>
                 </div>
 
+                {/* Testimonial Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {siteData.testimonials.map((t, idx) => (
+                    {siteData.testimonials.map((testimonial, idx) => (
                         <div
                             key={idx}
-                            className="relative p-8 rounded-[2rem] bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+                            className="relative p-8 rounded-2xl bg-navy-900 border border-navy-800 group hover:border-gold-500/30 transition-all duration-300"
                         >
-                            <Quote className="absolute top-6 right-8 w-12 h-12 text-gray-50 opacity-10 group-hover:text-orange-100 group-hover:opacity-100 transition-all" />
+                            {/* Quote Icon */}
+                            <Quote className="w-10 h-10 text-gold-500/20 mb-6" />
 
-                            <div className="flex gap-1 mb-6">
+                            {/* Rating */}
+                            <div className="flex gap-1 mb-4">
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
-                                        className={`w-4 h-4 ${i < t.rating ? "fill-orange-400 text-orange-400" : "text-gray-200"
-                                            }`}
+                                        className={`w-4 h-4 ${i < testimonial.rating ? "text-gold-500 fill-gold-500" : "text-navy-700"}`}
                                     />
                                 ))}
                             </div>
 
-                            <p className="text-gray-600 mb-8 italic relative z-10">"{t.review}"</p>
+                            {/* Review */}
+                            <p className="text-slate-300 leading-relaxed mb-6">
+                                "{testimonial.review}"
+                            </p>
 
+                            {/* Author */}
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-100 to-pink-100 flex items-center justify-center font-bold text-orange-600">
-                                    {t.name.charAt(0)}
-                                </div>
+                                <img
+                                    src={testimonial.photo}
+                                    alt={testimonial.name}
+                                    className="w-12 h-12 rounded-full object-cover border-2 border-navy-700"
+                                />
                                 <div>
-                                    <p className="font-bold text-gray-900">{t.name}</p>
-                                    <p className="text-xs text-gray-400 font-medium">Verified Buyer</p>
+                                    <p className="font-semibold text-white">{testimonial.name}</p>
+                                    <p className="text-sm text-slate-400">{testimonial.role}</p>
                                 </div>
                             </div>
                         </div>

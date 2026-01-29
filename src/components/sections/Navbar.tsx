@@ -1,65 +1,102 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, Heart, User, Menu } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { siteData } from "@/config/site-data";
 import Container from "@/components/ui/Container";
+import Button from "@/components/ui/Button";
 
 const Navbar = () => {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const waNumber = siteData.general.whatsappNumbers[0];
+    const waMessage = siteData.general.whatsappMessage;
+
+    const handleContact = () => {
+        const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+        window.open(url, "_blank");
+    };
+
     return (
-        <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass py-3" : "bg-transparent py-5"
+            }`}>
             <Container>
-                <div className="flex items-center justify-between h-20 gap-4">
+                <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent shrink-0">
-                        {siteData.general.brandName}
+                    <Link href="/" className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center">
+                            <span className="text-navy-900 font-bold text-xl">P</span>
+                        </div>
+                        <span className="text-2xl font-bold text-white">
+                            {siteData.general.brandName}
+                        </span>
                     </Link>
 
-                    {/* Search Bar - Hidden on mobile, visible on medium+ */}
-                    <div className="hidden md:flex flex-1 max-w-md relative group">
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            className="w-full bg-gray-100 border-transparent focus:bg-white focus:border-orange-200 focus:ring-4 focus:ring-orange-100 rounded-full py-2.5 pl-12 pr-4 text-sm transition-all"
-                        />
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    </div>
-
-                    {/* Nav Links - Hidden on mobile */}
+                    {/* Desktop Nav */}
                     <div className="hidden lg:flex items-center gap-8">
                         {siteData.navbar.links.map((link) => (
                             <Link
                                 key={link.label}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors"
+                                className="text-slate-300 hover:text-gold-500 transition-colors font-medium"
                             >
                                 {link.label}
                             </Link>
                         ))}
                     </div>
 
-                    {/* Icons */}
-                    <div className="flex items-center gap-2 sm:gap-4">
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors md:hidden">
-                            <Search className="w-5 h-5" />
-                        </button>
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors relative">
-                            <Heart className="w-5 h-5" />
-                            <span className="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full ring-2 ring-white" />
-                        </button>
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors relative">
-                            <ShoppingCart className="w-5 h-5" />
-                            <span className="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
-                        </button>
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors hidden sm:block">
-                            <User className="w-5 h-5" />
-                        </button>
-                        <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors lg:hidden">
-                            <Menu className="w-5 h-5" />
-                        </button>
+                    {/* Desktop CTA */}
+                    <div className="hidden lg:flex items-center gap-4">
+                        <Button variant="outline" size="sm" onClick={handleContact}>
+                            <Phone className="w-4 h-4 mr-2" />
+                            Hubungi Kami
+                        </Button>
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="lg:hidden p-2 text-white hover:bg-navy-800 rounded-lg transition-colors"
+                    >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
                 </div>
+
+                {/* Mobile Menu */}
+                {mobileMenuOpen && (
+                    <div className="lg:hidden mt-4 py-4 border-t border-navy-700">
+                        <div className="flex flex-col gap-2">
+                            {siteData.navbar.links.map((link) => (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="px-4 py-3 text-slate-300 hover:bg-navy-800 hover:text-gold-500 rounded-lg font-medium transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                            <Button
+                                variant="primary"
+                                className="mt-4"
+                                onClick={handleContact}
+                            >
+                                <Phone className="w-4 h-4 mr-2" />
+                                Hubungi Kami
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </Container>
         </nav>
     );
