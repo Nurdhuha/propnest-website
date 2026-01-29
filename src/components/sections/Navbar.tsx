@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import { siteData } from "@/config/site-data";
 import Container from "@/components/ui/Container";
@@ -21,6 +22,7 @@ const Navbar = () => {
 
     const waNumber = siteData.general.whatsappNumbers[0];
     const waMessage = siteData.general.whatsappMessage;
+    const logoSrc = siteData.general.logo || "/propnest-logo.png";
 
     const handleContact = () => {
         const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
@@ -34,10 +36,14 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center">
-                            <span className="text-navy-900 font-bold text-xl">P</span>
-                        </div>
-                        <span className="text-2xl font-bold text-white">
+                        <Image
+                            src={logoSrc}
+                            alt={siteData.general.brandName}
+                            width={44}
+                            height={44}
+                            className="w-11 h-11 object-contain"
+                        />
+                        <span className="hidden sm:block text-2xl font-bold text-white">
                             {siteData.general.brandName}
                         </span>
                     </Link>

@@ -8,6 +8,7 @@ export const siteData = {
     },
     general: {
         brandName: "PropNest",
+        logo: "/propnest-logo.png",
         tagline: "Find Your Dream Property",
         whatsappNumbers: [
             "6281234567890",
