@@ -28,7 +28,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: siteData.general.brandName,
-    url: typeof window !== "undefined" ? window.location.origin : "",
+    url: "https://propnest.id",
     telephone: siteData.general.whatsappNumbers[0],
     description: "Your trusted marketplace for quality products.",
   };
