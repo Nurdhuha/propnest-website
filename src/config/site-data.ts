@@ -4,6 +4,7 @@ export const siteData = {
         waRotator: true,
         enableAnimations: true,
         enableSEOJSONLD: true,
+        enablePromoBar: false,
     },
     general: {
         brandName: "PropNest",
@@ -36,6 +37,12 @@ export const siteData = {
         headline: "Temukan Hunian Impian Anda",
         subheadline: "Koleksi properti premium terbaik di lokasi strategis dengan harga kompetitif",
         backgroundImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+    },
+    promoBar: {
+        message: "🏠 Promo Spesial: Konsultasi GRATIS untuk pembelian properti pertama Anda!",
+        linkText: "Hubungi Kami",
+        linkUrl: "#contact",
+        backgroundColor: "bg-gold-500",
     },
     stats: [
         { value: "500+", label: "Properti Tersedia" },

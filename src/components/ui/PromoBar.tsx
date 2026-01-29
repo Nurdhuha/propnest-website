@@ -7,13 +7,8 @@ import { siteData } from "@/config/site-data";
 const PromoBar = () => {
     const [isVisible, setIsVisible] = useState(true);
 
-    // Feature flag check: don't render if disabled
-    if (!siteData.features.enablePromoBar) {
-        return null;
-    }
-
-    // Don't render if user closed it
-    if (!isVisible) {
+    // Don't render if feature is disabled or user closed it
+    if (!siteData.features.enablePromoBar || !isVisible) {
         return null;
     }
 
@@ -46,3 +41,4 @@ const PromoBar = () => {
 };
 
 export default PromoBar;
+

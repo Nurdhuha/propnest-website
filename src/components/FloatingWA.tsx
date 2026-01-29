@@ -1,28 +1,29 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
 import { siteData } from "@/config/site-data";
 
 const FloatingWA = () => {
     const features = siteData.features;
+    const numbers = siteData.general.whatsappNumbers;
+
+    // Use first number as default for SSR, then randomize on client
+    const [selectedNumber, setSelectedNumber] = useState(numbers[0]);
+
+    useEffect(() => {
+        if (features.waRotator && numbers.length > 1) {
+            setSelectedNumber(numbers[Math.floor(Math.random() * numbers.length)]);
+        }
+    }, [features.waRotator, numbers]);
+
+    const waMessage = siteData.general.whatsappMessage;
+    const whatsappUrl = `https://wa.me/${selectedNumber}?text=${encodeURIComponent(waMessage)}`;
 
     // Feature flag check
     if (!features.enableFloatingWA) {
         return null;
     }
-
-    // WA Rotator
-    const selectedNumber = useMemo(() => {
-        const numbers = siteData.general.whatsappNumbers;
-        if (features.waRotator && numbers.length > 1) {
-            return numbers[Math.floor(Math.random() * numbers.length)];
-        }
-        return numbers[0];
-    }, [features.waRotator]);
-
-    const waMessage = siteData.general.whatsappMessage;
-    const whatsappUrl = `https://wa.me/${selectedNumber}?text=${encodeURIComponent(waMessage)}`;
 
     return (
         <a

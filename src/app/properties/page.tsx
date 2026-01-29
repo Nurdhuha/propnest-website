@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { MapPin, Bed, Bath, Maximize, Heart, Search, SlidersHorizontal, X } from "lucide-react";
@@ -22,7 +22,7 @@ const formatPrice = (price: number) => {
     return `Rp ${price.toLocaleString("id-ID")}`;
 };
 
-export default function PropertiesPage() {
+function PropertiesContent() {
     const searchParams = useSearchParams();
     const typeFromUrl = searchParams.get("type") || "all";
 
@@ -115,8 +115,8 @@ export default function PropertiesPage() {
                             <button
                                 onClick={() => setActiveType("all")}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeType === "all"
-                                        ? "bg-gold-500 text-navy-900"
-                                        : "bg-navy-800 text-slate-300 hover:bg-navy-700"
+                                    ? "bg-gold-500 text-navy-900"
+                                    : "bg-navy-800 text-slate-300 hover:bg-navy-700"
                                     }`}
                             >
                                 Semua
@@ -126,8 +126,8 @@ export default function PropertiesPage() {
                                     key={type.slug}
                                     onClick={() => setActiveType(type.slug)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeType === type.slug
-                                            ? "bg-gold-500 text-navy-900"
-                                            : "bg-navy-800 text-slate-300 hover:bg-navy-700"
+                                        ? "bg-gold-500 text-navy-900"
+                                        : "bg-navy-800 text-slate-300 hover:bg-navy-700"
                                         }`}
                                 >
                                     {type.label}
@@ -233,5 +233,17 @@ export default function PropertiesPage() {
             <Footer />
             <FloatingWA />
         </main>
+    );
+}
+
+export default function PropertiesPage() {
+    return (
+        <Suspense fallback={
+            <main className="min-h-screen bg-navy-900 flex items-center justify-center">
+                <div className="text-white">Loading...</div>
+            </main>
+        }>
+            <PropertiesContent />
+        </Suspense>
     );
 }
